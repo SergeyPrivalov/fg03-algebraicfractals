@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Algebraic Fractals</title>
+    <script src="Draw.js"></script>
+    <script src="program.js"></script>
+    <script src="pool.js"></script>
+    <script src="Mandel.js"></script>
+    <script src="Gull.js"></script>
+</head>
+<body>
+<table align="left" border="2">
+    <tr>
+        <td>
+            <canvas height="600" width="600" id="canvas"></canvas>
+        </td>
+        <td>
+            раскарска:
+            <select name="menu" size="1" id="color">
+                <option value="class">классическая</option>
+                <option value="lvl">уровневая</option>
+                <option value="zebra">зеброй</option>
+            </select></br>
+            метод:
+            <select size="1" id="method">
+                <option value="pool">Бассейн Ньютона</option>
+                <option value="Mandel">Множество Мандельброта</option>
+                <option value="Gull">Множество Жюлиа</option>
+            </select></br>
+            Колличество итераций</br>
+            10:<input type="range" min="10" max="50" step="1" id="number">:50 </br>
+            <input type="button" onclick="GetFractal()" value="нарисовать"></br>
+            </br>
+            </br>
+            Константа Жюлиа:</br>
+            x : <input type="number" id="x" value="-0.12"></br>
+            y : <input type="number" id="y" value="0.74"></br>
+            <select size="1" id="zoom">
+                <option value="+">приближение</option>
+                <option value="-">удаление</option>
+            </select>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
