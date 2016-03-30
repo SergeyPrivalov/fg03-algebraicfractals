@@ -26,6 +26,9 @@ function GetPool() {
                 case "zebra":
                     paint = Zebra(atract[1]);
                     break;
+                case "gibrid":
+                    paint = GibridColor(atract[0],atract[1]);
+                    break;
             }
             imageData.data[4 * (i + canv.width * j) + 0] = paint[0];
             imageData.data[4 * (i + canv.width * j) + 1] = paint[1];
