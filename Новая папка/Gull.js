@@ -27,7 +27,6 @@ function GetGull() {
                     paint = Zebra(iteration);
                     break;
             }
-            //alert(d);
             imageData.data[4 * (i + canv.width * j) + 0] = paint[0];
             imageData.data[4 * (i + canv.width * j) + 1] = paint[1];
             imageData.data[4 * (i + canv.width * j) + 2] = paint[2];

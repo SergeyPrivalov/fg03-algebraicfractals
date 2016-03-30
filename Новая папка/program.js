@@ -15,7 +15,7 @@ function Canv(){
         this.top = t;
         this.right = r;
         this.bottom = b;
-    }
+    };
     this.CallFunction = function(){
         var p = document.getElementById("method");
         switch (p.value) {
@@ -33,17 +33,21 @@ function Canv(){
 }
 canv = new Canv();
 function GetFractal() {
+    var start = new  Date();
     canv.NewCoords(-2,2,2,-2);
-    var p = document.getElementById("method");
     var canvas = document.getElementById("canvas");
     canvas.addEventListener("mousedown", function (e) {
-        mouseDownHandler(canvas, e, p);
+        mouseDownHandler(canvas, e);
     }, false);
     canv.CallFunction();
+    var end = new Date();
+    console.log("вермя выполнения фрактала: " + (end.getDate() - start.getDate()) + " ms");
 }
-function mouseDownHandler(canvas, e,p) {
+function mouseDownHandler(canvas, e) {
+    var start = new  Date();
     var z = 4;
     var coords = canvas.relMouseCoords(e);
+    console.log("центр приближения x: " + coords.x + " y: " + coords.y);
     var q = document.getElementById("zoom");
 
     var ox,oy;
@@ -62,8 +66,14 @@ function mouseDownHandler(canvas, e,p) {
 
     var point1 = canv.GetComlexCoordinat(left,top);
     var point2 = canv.GetComlexCoordinat(right,bottom);
+
+    console.log("left: " + point1[0] + "\n top: " + point1[1]);
+    console.log("right: " + point2[0] + "\n bottom: " + point2[1]);
+
     canv.NewCoords(point1[0], point1[1], point2[0], point2[1]);
     canv.CallFunction();
+    var end = new Date();
+    console.log("вермя выполнения zoom: " + (end.getDate() - start.getDate()) + " ms");
 }
 HTMLCanvasElement.prototype.relMouseCoords = function (event) {
     var totalOffsetX = 0;
