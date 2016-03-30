@@ -1,18 +1,16 @@
-function GetMandel(left,top,right,bottom) {
+function GetMandel() {
     var n = document.getElementById("number");
     var canvas = document.getElementById("canvas");
-    var canvasWidth = parseInt(canvas.getAttribute("width"));
-    var canvasHeight = parseInt(canvas.getAttribute("height"));
 
     var color = document.getElementById("color");
 
     var context = canvas.getContext('2d');
 
-    var imageData = context.createImageData(canvasWidth, canvasHeight);
+    var imageData = context.createImageData(canv.width, canv.height);
 
-    for (var i = 0; i < canvasWidth; ++i) {
-        for (var j = 0; j < canvasHeight; ++j) {
-            var point = GetComlexCoordinat(i, j, left, top, right, bottom, canvasWidth, canvasHeight);
+    for (var i = 0; i < canv.width; ++i) {
+        for (var j = 0; j < canv.height; ++j) {
+            var point = canv.GetComlexCoordinat(i, j);
             var d = CheckDistanses(point[0], point[1], n.value);
             var paint;
             switch (color.value) {
@@ -26,11 +24,10 @@ function GetMandel(left,top,right,bottom) {
                     paint = Zebra(d);
                     break;
             }
-            //alert(d);
-            imageData.data[4 * (i + canvasWidth * j) + 0] = paint[0];
-            imageData.data[4 * (i + canvasWidth * j) + 1] = paint[1];
-            imageData.data[4 * (i + canvasWidth * j) + 2] = paint[2];
-            imageData.data[4 * (i + canvasWidth * j) + 3] = paint[3];
+            imageData.data[4 * (i + canv.width * j) + 0] = paint[0];
+            imageData.data[4 * (i + canv.width * j) + 1] = paint[1];
+            imageData.data[4 * (i + canv.width * j) + 2] = paint[2];
+            imageData.data[4 * (i + canv.width * j) + 3] = paint[3];
         }
     }
     context.putImageData(imageData, 0, 0);
