@@ -9,7 +9,7 @@
     <script src="Mandel.js"></script>
     <script src="Gull.js"></script>
 </head>
-<body>
+<body onload="Touch()">
 <table align="left" border="2">
     <tr>
         <td>
@@ -30,7 +30,7 @@
                 <option value="Gull">Множество Жюлиа</option>
             </select></br>
             Колличество итераций</br>
-            10:<input type="range" min="10" max="50" step="1" id="number">:50 </br>
+            10:<input type="range" min="10" max="100" step="1" id="number">:100 </br>
             <input type="button" onclick="GetFractal()" value="нарисовать"></br>
             </br>
             </br>

@@ -45,10 +45,10 @@ function FindIteration(x,y,a,b,n) {
     var y1 = 0;
     var iteration = 0;
     while (iteration < n) {
+        if (x0 * x0 + y0 * y0 > 4)
+            return iteration;
         x1 = x0 * x0 - y0 * y0 + a;
         y1 = 2 * x0 * y0 + b;
-        if (x1 * x1 + y1 * y1 > 4)
-            return iteration;
         x0 = x1;
         y0 = y1;
         iteration++;

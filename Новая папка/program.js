@@ -5,6 +5,7 @@ function Canv(){
     this.bottom;
     this.width = 600;
     this.height = 600;
+    this.canvas;
     this.GetComlexCoordinat =  function(x,y) {
         var i = x * (this.right - this.left) / (this.width - 1) + this.left;
         var j = y * (this.bottom - this.top) / (this.height - 1) + this.top;
@@ -32,13 +33,15 @@ function Canv(){
     }
 }
 canv = new Canv();
-function GetFractal() {
-    var start = new  Date();
-    canv.NewCoords(-2,2,2,-2);
+function Touch(){
     var canvas = document.getElementById("canvas");
     canvas.addEventListener("mousedown", function (e) {
         mouseDownHandler(canvas, e);
     }, false);
+}
+function GetFractal() {
+    var start = new  Date();
+    canv.NewCoords(-2,2,2,-2);
     canv.CallFunction();
     var end = new Date();
     console.log("вермя выполнения фрактала: " + (end.getDate() - start.getDate()) + " ms");
