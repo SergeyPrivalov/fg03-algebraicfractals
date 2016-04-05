@@ -2,11 +2,10 @@ function Zebra(n) {
     return n % 2 == 0 ? [0, 0, 0, 255] : [255, 255, 255, 255];
 }
 function Lvl(n) {
-    var p = document.getElementById("number");
     var k = n;
-    n = p.value;
+    n = canv.n;
     var brightness = n > 1 ? 255 * k * 4 / (n - 1) : 255;
-    return [0, brightness, brightness, 255];
+    return [0, brightness, brightness , 255];
     //return [brightness, 0, brightness, 255];
     //return [0, brightness, 0, 255];
     //return [0, 0, brightness, 255];
@@ -39,9 +38,8 @@ function GibridColor(atract ,n){
     var green = 0;
     var blue = 0;
 
-    var p = document.getElementById("number");
     var k = n;
-    n = p.value;
+    n = canv.n;
     switch (atract) {
         case 1:
             red = n != 0 ? 255 * k / (n - 1) : 255;

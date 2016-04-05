@@ -1,35 +1,68 @@
-function Canv(){
+function Canv() {
     this.left;
     this.top;
     this.right;
     this.bottom;
     this.width = 600;
     this.height = 600;
-    this.canvas;
-    this.GetComlexCoordinat =  function(x,y) {
+    this.n;
+    this.color;
+    this.method;
+    this.a;
+    this.b;
+    this.getComlexCoordinat = function (x, y) {
         var i = x * (this.right - this.left) / (this.width - 1) + this.left;
         var j = y * (this.bottom - this.top) / (this.height - 1) + this.top;
-        return [i, j];
+        return {x: i, y: j};
     };
-    this.NewCoords = function(l,t,r,b){
+    this.newCoords = function (l, t, r, b) {
         this.left = l;
         this.top = t;
         this.right = r;
         this.bottom = b;
     };
-    this.CallFunction = function(){
-        var p = document.getElementById("method");
-        switch (p.value) {
+    this.callFunction = function (x,y) {
+        switch (this.method) {
             case "pool":
-                GetPool();
-                break;
+                return GetPool(x,y);
             case  "Mandel":
-                GetMandel();
-                break;
+                return GetMandel(x,y);
             case "Gull":
-                GetGull();
-                break;
+                return GetGull(x,y);
         }
+    };
+    this.identifyColor = function (d) {
+        var atract;
+        var iteration = d;
+        if (this.method == "pool") {
+            atract = d.at;
+            iteration = d.it;
+        }
+        switch (this.color) {
+            case "class":
+                if (this.method == "pool")
+                    return ClassicColor(atract);
+                return Classic(iteration);
+            case "lvl":
+                return Lvl(iteration);
+            case "zebra":
+                return Zebra(iteration);
+            case "gibrid":
+                if (this.method == "pool")
+                    return GibridColor(atract, iteration);
+        }
+    };
+    this.readFields = function(){
+        var p = document.getElementById("number");
+        this.n = p.value
+        p = document.getElementById("color");
+        this.color = p.value;
+        p = document.getElementById("method");
+        this.method = p.value;
+        p = document.getElementById("x");
+        this.a = p.value;
+        p = document.getElementById("y");
+        this.b = p.value;
     }
 }
 canv = new Canv();
@@ -39,10 +72,27 @@ function Touch(){
         mouseDownHandler(canvas, e);
     }, false);
 }
-function GetFractal() {
+function GetFractal(left,top,right,bottom) {
     var start = new  Date();
-    canv.NewCoords(-2,2,2,-2);
-    canv.CallFunction();
+    canv.newCoords(left,top,right,bottom);
+    canv.readFields();
+    var canvas = document.getElementById("canvas");
+
+    var context = canvas.getContext('2d');
+
+    var imageData = context.createImageData(canv.width, canv.height);
+
+    for (var i = 0; i < canv.width; ++i) {
+        for (var j = 0; j < canv.height; ++j) {
+            var point = canv.getComlexCoordinat(i, j);
+            var paint = canv.callFunction(point.x,point.y);
+            imageData.data[4 * (i + canv.width * j) + 0] = paint[0];
+            imageData.data[4 * (i + canv.width * j) + 1] = paint[1];
+            imageData.data[4 * (i + canv.width * j) + 2] = paint[2];
+            imageData.data[4 * (i + canv.width * j) + 3] = paint[3];
+        }
+    }
+    context.putImageData(imageData, 0, 0);
     var end = new Date();
     console.log("вермя выполнения фрактала: " + (end.getDate() - start.getDate()) + " ms");
 }
@@ -58,8 +108,8 @@ function mouseDownHandler(canvas, e) {
         ox = canv.width / z;
         oy = canv.height / z;
     } else if (q.value === "-") {
-        ox = canv.width * z;
-        oy = canv.height * z;
+        ox = canv.width * z/2;
+        oy = canv.height * z/2;
     }
 
     var left = coords.x - ox;
@@ -67,14 +117,13 @@ function mouseDownHandler(canvas, e) {
     var right = coords.x + ox;
     var bottom = coords.y + oy;
 
-    var point1 = canv.GetComlexCoordinat(left,top);
-    var point2 = canv.GetComlexCoordinat(right,bottom);
+    var point1 = canv.getComlexCoordinat(left,top);
+    var point2 = canv.getComlexCoordinat(right,bottom);
 
-    console.log("left: " + point1[0] + "\n top: " + point1[1]);
-    console.log("right: " + point2[0] + "\n bottom: " + point2[1]);
+    console.log("left: " + point1.x + "\n top: " + point1.y);
+    console.log("right: " + point2.x + "\n bottom: " + point2.y);
 
-    canv.NewCoords(point1[0], point1[1], point2[0], point2[1]);
-    canv.CallFunction();
+    GetFractal(point1.x, point1.y, point2.x, point2.y);
     var end = new Date();
     console.log("вермя выполнения zoom: " + (end.getDate() - start.getDate()) + " ms");
 }
